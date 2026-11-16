@@ -1,53 +1,196 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRP Digital</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f1f4f8;
-      color: #263445;
-    }
-    header {
-      background: #12345a;
-      color: white;
-      padding: 28px;
-      text-align: center;
-    }
-    main {
-      max-width: 650px;
-      margin: 60px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 3px 15px #0001;
-    }
-    h2 { color: #176b45; }
-    .status {
-      display: inline-block;
-      padding: 10px 18px;
-      background: #e0f3e8;
-      color: #176b45;
-      border-radius: 20px;
-      font-weight: bold;
-    }
-  </style>
-</head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CRP Digital — Bunge DPA | Protótipo 09 — Estrutura SharePoint</title>
+<style>
+:root{--navy:#12345a;--blue:#1769aa;--light:#eef4f9;--line:#d8e1ea;--text:#243447;--muted:#65758b;--green:#18794e;--orange:#a85a00;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;background:#f4f7fa;color:var(--text);font:15px/1.45 Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-size:20px;margin:0}header small{opacity:.8}
+main{max-width:1180px;margin:24px auto;padding:0 16px}.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px #17324d0a}
+h2{margin:0 0 14px;font-size:19px;color:var(--navy)}h3{margin:0 0 10px;font-size:16px;color:var(--navy)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+label{display:block;font-weight:600;font-size:13px;margin-bottom:5px;color:#40536a}
+input,select,textarea{width:100%;padding:10px;border:1px solid #bdcad8;border-radius:7px;background:white;color:var(--text);font:inherit}
+textarea{min-height:70px;resize:vertical}
+button{border:0;border-radius:7px;padding:10px 15px;font-weight:700;cursor:pointer;background:var(--blue);color:white}
+button.secondary{background:#e8eef5;color:var(--navy);border:1px solid var(--line)}
+button.danger{background:#b42318}button.success{background:var(--green)}button:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.muted{color:var(--muted);font-size:13px}
+.badge{display:inline-block;padding:4px 9px;border-radius:20px;background:#e8eef5;color:#34495e;font-size:12px;font-weight:700}
+.badge.green{background:#e4f4eb;color:#17633f}.badge.orange{background:#fff1dc;color:#8c4b00}.badge.red{background:#fde8e7;color:#9b2119}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f3f6f9;color:#42566d}
+.sku{border:1px solid var(--line);border-radius:10px;padding:14px;margin:12px 0;background:#fbfdff}
+.skuhead{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.hidden{display:none!important}.notice{padding:11px 13px;border-radius:8px;background:#fff7e8;border:1px solid #f1d39e;margin:10px 0;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.stat{background:var(--light);border-radius:9px;padding:14px}.stat b{display:block;font-size:25px;color:var(--navy)}
+hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+.signature{border:1px dashed #9aaabd;border-radius:8px;background:#fff;width:100%;height:110px;touch-action:none}
+.signrow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
+@media(max-width:650px){header{padding:14px}main{margin:14px auto}.signrow{grid-template-columns:1fr}table{display:block;overflow-x:auto}}
+</style></head>
 <body>
-  <header>
-    <h1>CRP Digital</h1>
-    <p>Controle de Recebimento de Produção</p>
-  </header>
- 
-  <main>
-    <h2>Nosso sistema está no ar!</h2>
-    <p>Esta é a primeira página de teste do CRP Digital.</p>
-    <p class="status">Hospedagem funcionando</p>
-    <p>Próxima etapa: desenvolver o sistema completo.</p>
-  </main>
-</body>
-</html>
+<header><div><h1>CRP Digital — Bunge DPA</h1><small>Protótipo 09 · estrutura alinhada às listas SharePoint</small></div><div id="session" class="muted" style="color:#fff"></div></header>
+<main>
+<div class="notice"><b>Modo de teste local:</b> esta versão já organiza os dados conforme as listas do SharePoint, mas ainda não está conectada ao ambiente Bunge. Os registros ficam somente neste navegador. Não use dados reais nem considere este acesso demonstrativo como autenticação corporativa.</div>
+<section id="login" class="card">
+<h2>Acesso ao sistema</h2>
+<p class="muted">Escolha o perfil para testar o fluxo. Este acesso é demonstrativo e não substitui autenticação corporativa.</p>
+<div class="grid">
+<div><label>Perfil</label><select id="role"><option value="conferente">Conferente</option><option value="analista">Analista de Estoque</option></select></div>
+<div><label>Nome do usuário</label><input id="username" placeholder="Ex.: Conferente Turno A"></div>
+<div><label>E-mail corporativo</label><input type="email" id="userEmail" placeholder="nome.sobrenome@bunge.com"></div>
+</div><div class="actions"><button onclick="login()">Entrar</button></div>
+</section>
+
+<section id="app" class="hidden">
+<div class="card" id="toolbar"><div class="actions" style="margin-top:0"><button class="secondary" onclick="showHome()">Início</button><button class="secondary" onclick="exportBackup()">Exportar backup JSON</button><button class="secondary" onclick="logout()">Sair</button><span id="roleLabel" class="badge"></span></div></div>
+<section id="homeConferente" class="hidden">
+<div class="card"><h2>Novo CRP do turno</h2>
+<div class="grid">
+<div><label>Número do CRP</label><input id="crpNumber" placeholder="Ex.: CRP-2026-001"></div>
+<div><label>Data</label><input type="date" id="crpDate"></div>
+<div><label>Turno</label><select id="shift"><option> A </option><option> B </option><option> C </option></select></div>
+<div><label>Conferente</label><input id="clerk" placeholder="Nome do conferente"></div>
+</div><div class="actions"><button onclick="createCRP()">Iniciar CRP</button></div></div>
+<div class="card"><h2>Meus CRPs em preenchimento</h2><div id="drafts"></div></div>
+</section>
+<section id="homeAnalyst" class="hidden">
+<div class="card"><h2>Painel do Analista de Estoque</h2><div class="stats" id="stats"></div><hr><h3>Indicadores gerenciais</h3><div id="managementDashboard"></div></div>
+<div class="card"><h2>CRPs aguardando análise</h2><div id="pending"></div></div>
+<div class="card"><h2>Consulta histórica de CRPs</h2>
+<p class="muted">Consulte registros de qualquer data, turno ou situação. Abra um CRP para visualizar endereços, quantidades, assinaturas e histórico de correções.</p>
+<div class="grid">
+<div><label>Data inicial</label><input type="date" id="filterFrom" onchange="renderAnalyst()"></div>
+<div><label>Data final</label><input type="date" id="filterTo" onchange="renderAnalyst()"></div>
+<div><label>Turno</label><select id="filterShift" onchange="renderAnalyst()"><option value="">Todos</option><option value="A">Turno A</option><option value="B">Turno B</option><option value="C">Turno C</option></select></div>
+<div><label>Status</label><select id="filterStatus" onchange="renderAnalyst()"><option value="">Todos</option><option>Em preenchimento</option><option>Aguardando análise</option><option>Em análise</option><option>Analisado</option><option>Reaberto</option></select></div>
+<div><label>Buscar SKU, descrição, OP ou lote</label><input id="filterText" placeholder="Digite para pesquisar..." oninput="renderAnalyst()"></div>
+</div><div class="actions"><button class="secondary" onclick="clearCRPFilters()">Limpar filtros</button></div>
+<div id="reviewed"></div>
+<hr><h3>Rastreabilidade de recebimentos</h3>
+<p class="muted">Localize um recebimento por número de pallet, SKU, OP, lote ou endereço. A pesquisa mostra em qual armazém, rua e nível o intervalo foi registrado.</p>
+<div class="grid"><div style="grid-column:1/-1"><label>Pesquisar pallet, SKU, OP, lote, ARZ, rua ou nível</label><input id="traceText" placeholder="Ex.: 025, SKU 12345, OP 1001, Rua 4..." oninput="renderTraceability()"></div></div>
+<div id="traceResults"></div>
+</div>
+</section>
+<section id="detail" class="hidden"></section>
+</section>
+</main><footer>Protótipo 09 · demonstração local · sem conexão com SharePoint · dados armazenados neste navegador (localStorage). O e-mail informado é apenas um dado de identificação e não autentica o usuário.</footer>
+<script>
+const KEY='crpDigitalV05';
+// Migra os dados locais da versão anterior, se existirem, sem apagá-los.
+let db=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem('crpDigitalV04')||'{"crps":[]}'), user=null, current=null;
+if(!localStorage.getItem(KEY)) localStorage.setItem(KEY,JSON.stringify(db));
+const $=id=>document.getElementById(id);
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}
+function exportBackup(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='CRP_Digital_Backup_Local.json';a.click();URL.revokeObjectURL(url)}
+function login(){const role=$('role').value,name=$('username').value.trim()||(role==='analista'?'Analista demonstrativo':'Conferente demonstrativo'),email=$('userEmail').value.trim();if(role==='conferente'&&!email){alert('Informe o e-mail corporativo do conferente.');return}if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Informe um e-mail válido.');return}user={role,name,email};$('login').classList.add('hidden');$('app').classList.remove('hidden');$('session').textContent=user.name;$('roleLabel').textContent=user.role==='analista'?'ANALISTA':'CONFERENTE';showHome()}
+function logout(){user=null;current=null;$('app').classList.add('hidden');$('login').classList.remove('hidden');$('session').textContent=''}
+function hideViews(){['homeConferente','homeAnalyst','detail'].forEach(x=>$(x).classList.add('hidden'))}
+function showHome(){hideViews();if(user.role==='conferente'){ $('homeConferente').classList.remove('hidden');renderDrafts()}else{$('homeAnalyst').classList.remove('hidden');renderAnalyst()}}
+function createCRP(){let numero=$('crpNumber').value.trim(),date=$('crpDate').value,shift=$('shift').value.trim(),clerk=$('clerk').value.trim()||user.name;if(!numero){alert('Informe o número do CRP.');return}if(db.crps.some(c=>(c.numero||'').toLowerCase()===numero.toLowerCase())){alert('Esse número de CRP já existe neste navegador. Informe outro número.');return}if(!date){alert('Informe a data.');return}
+let c={id:Date.now().toString(),numero,date,shift,clerk,conferenteEmail:user.email||'',originalClerk:clerk,createdBy:user.name,status:'Em preenchimento',skus:[],audit:[]};db.crps.push(c);save();openCRP(c.id)}
+function renderDrafts(){let list=db.crps.filter(c=>c.status==='Em preenchimento'&&c.createdBy===user.name);$('drafts').innerHTML=list.length?list.map(c=>`<div class="sku"><b>${esc(c.numero||'CRP sem número')} · ${fmt(c.date)} · Turno ${c.shift}</b><p class="muted">${c.clerk} · ${c.skus.length}/12 SKUs cadastrados</p><button onclick="openCRP('${c.id}')">Continuar CRP</button></div>`).join(''):'<p class="muted">Nenhum CRP em preenchimento.</p>'}
+function renderAnalyst(){
+let p=db.crps.filter(c=>['Aguardando análise','Em análise','Reaberto'].includes(c.status));
+$('stats').innerHTML=`<div class="stat"><b>${p.length}</b><span>Aguardando análise / em andamento</span></div><div class="stat"><b>${db.crps.filter(c=>c.status==='Analisado').length}</b><span>Já analisados</span></div><div class="stat"><b>${db.crps.reduce((n,c)=>n+c.skus.length,0)}</b><span>SKUs registrados</span></div>`;
+renderManagementDashboard();
+$('pending').innerHTML=p.length?p.map(c=>crpCard(c)).join(''):'<p class="muted">Nenhum CRP aguardando análise.</p>';
+let from=$('filterFrom')?.value||'',to=$('filterTo')?.value||'',shift=$('filterShift')?.value||'',status=$('filterStatus')?.value||'',q=($('filterText')?.value||'').trim().toLowerCase();
+let results=db.crps.filter(c=>(!from||c.date>=from)&&(!to||c.date<=to)&&(!shift||c.shift===shift)&&(!status||c.status===status)&&(!q||c.skus.some(s=>[s.code,s.desc,s.op,s.lot].some(v=>String(v||'').toLowerCase().includes(q))))).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||String(b.shift).localeCompare(String(a.shift)));
+$('reviewed').innerHTML=results.length?results.map(c=>crpCard(c)).join(''):'<p class="muted">Nenhum CRP encontrado com os filtros informados.</p>';
+renderTraceability();
+}
+
+function renderManagementDashboard(){
+ const all=db.crps||[], skus=all.flatMap(c=>(c.skus||[]).map(s=>({c,s})));
+ const dpa=x=> (x.s.addresses||[]).reduce((n,a)=>n+(Number(a.qty)||0),0);
+ const prod=x=>Number(x.s.productionTotal)||0;
+ const totalDpa=skus.reduce((n,x)=>n+dpa(x),0), totalProd=skus.reduce((n,x)=>n+prod(x),0);
+ const divergences=skus.filter(x=>prod(x)!==0&&prod(x)!==dpa(x));
+ const byShift={A:0,B:0,C:0}; all.forEach(c=>{byShift[c.shift]=(byShift[c.shift]||0)+(c.skus||[]).reduce((n,s)=>n+(s.addresses||[]).reduce((m,a)=>m+(Number(a.qty)||0),0),0)});
+ const bySku={}; skus.forEach(x=>{let k=(x.s.code||'SKU não informado')+' — '+(x.s.desc||'');bySku[k]=(bySku[k]||0)+dpa(x)});
+ const top=Object.entries(bySku).sort((a,b)=>b[1]-a[1]).slice(0,8);
+ const money=n=>Number(n||0).toLocaleString('pt-BR');
+ $('managementDashboard').innerHTML=`<div class="stats">
+ <div class="stat"><b>${money(totalDpa)}</b><span>Total de sacos registrados pela DPA</span></div>
+ <div class="stat"><b>${money(totalProd)}</b><span>Total informado pela Produção</span></div>
+ <div class="stat"><b>${divergences.length}</b><span>SKUs com divergência de quantidade</span></div>
+ <div class="stat"><b>${money(divergences.reduce((n,x)=>n+Math.abs(prod(x)-dpa(x)),0))}</b><span>Diferença absoluta em sacos</span></div></div>
+ <div class="grid"><div><h4>Recebimento por turno (sacos DPA)</h4><table><thead><tr><th>Turno</th><th>Total</th></tr></thead><tbody>${['A','B','C'].map(t=>`<tr><td>Turno ${t}</td><td>${money(byShift[t]||0)}</td></tr>`).join('')}</tbody></table></div>
+ <div><h4>Maiores volumes por SKU</h4><table><thead><tr><th>SKU / descrição</th><th>Sacos DPA</th></tr></thead><tbody>${top.length?top.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${money(v)}</td></tr>`).join(''):'<tr><td colspan="2">Sem recebimentos registrados.</td></tr>'}</tbody></table></div></div>
+ <p class="muted">Os indicadores consideram todos os CRPs armazenados neste navegador. A divergência é calculada quando existe total informado pela Produção diferente do total de endereços da DPA. Dados demonstrativos locais, ainda sem sincronização entre dispositivos.</p>`;
+}
+
+function renderTraceability(){
+ const box=$('traceResults'); if(!box)return;
+ const q=($('traceText')?.value||'').trim().toLowerCase();
+ const from=$('filterFrom')?.value||'',to=$('filterTo')?.value||'',shift=$('filterShift')?.value||'';
+ if(!q){box.innerHTML='<p class="muted">Digite um dado para iniciar a rastreabilidade.</p>';return;}
+ const rows=[];
+ for(const c of db.crps){
+  if((from&&c.date<from)||(to&&c.date>to)||(shift&&c.shift!==shift))continue;
+  for(const sku of c.skus||[]){
+   for(const a of sku.addresses||[]){
+    const textFields=[sku.code,sku.desc,sku.op,sku.lot,a.arz,a.street,a.level,a.palletStart,a.palletEnd].map(v=>String(v??'').toLowerCase());
+    let match=textFields.some(v=>v.includes(q));
+    const n=Number(q),start=Number(a.palletStart),end=Number(a.palletEnd);
+    if(!match&&q!==''&&Number.isFinite(n)&&Number.isFinite(start)&&Number.isFinite(end)&&n>=Math.min(start,end)&&n<=Math.max(start,end))match=true;
+    if(match)rows.push({c,sku,a});
+   }
+  }
+ }
+ rows.sort((x,y)=>(y.c.date||'').localeCompare(x.c.date||'')||String(y.c.shift).localeCompare(String(x.c.shift)));
+ box.innerHTML=rows.length?`<p class="muted">${rows.length} endereço(s) encontrado(s). Se o pallet estiver dentro de um intervalo, ele também será localizado.</p><div style="overflow-x:auto"><table><thead><tr><th>Data / turno</th><th>Status</th><th>SKU / descrição</th><th>OP</th><th>Lote</th><th>ARZ</th><th>Rua</th><th>Nível</th><th>Intervalo de pallets</th><th>Sacos</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmt(r.c.date)} · ${r.c.shift}</td><td>${esc(r.c.status)}</td><td>${esc(r.sku.code||'—')} · ${esc(r.sku.desc||'—')}</td><td>${esc(r.sku.op||'—')}</td><td>${esc(r.sku.lot||'—')}</td><td>${esc(r.a.arz||'—')}</td><td>${esc(r.a.street||'—')}</td><td>${esc(r.a.level||'—')}</td><td>${esc(r.a.palletStart)}–${esc(r.a.palletEnd)}</td><td>${Number(r.a.qty)||0}</td><td><button onclick="openCRP('${r.c.id}')">Abrir CRP</button></td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">Nenhum endereço encontrado para essa pesquisa.</p>';
+}
+function clearCRPFilters(){['filterFrom','filterTo','filterShift','filterStatus','filterText'].forEach(id=>$(id).value='');renderAnalyst()}
+function crpCard(c){let rows=c.skus.map((s,i)=>`<tr><td>${i+1}</td><td>${esc(s.code||'—')}</td><td>${esc(s.desc||'—')}</td><td>${esc(s.op||'—')}</td><td>${esc(s.line||'—')}</td><td>${esc(s.lot||'—')}</td></tr>`).join('');return `<div class="sku"><div class="skuhead"><b>${esc(c.numero||'CRP sem número')} · ${fmt(c.date)} · Turno ${c.shift}</b><span class="badge ${c.status==='Analisado'?'green':'orange'}">${c.status}</span></div><p class="muted">Conferente: ${esc(c.clerk)} · ${c.skus.length} SKU(s)</p><div style="overflow-x:auto"><table><thead><tr><th>#</th><th>SKU</th><th>Descrição</th><th>OP</th><th>Linha</th><th>Lote</th></tr></thead><tbody>${rows||'<tr><td colspan="6">Nenhum SKU cadastrado.</td></tr>'}</tbody></table></div><div class="actions"><button onclick="openCRP('${c.id}')">Abrir CRP completo</button></div></div>`}
+function fmt(d){return d?d.split('-').reverse().join('/'):'—'}function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function openCRP(id){current=db.crps.find(c=>c.id===id);hideViews();$('detail').classList.remove('hidden');if(user.role==='analista'&&current.status==='Aguardando análise')current.status='Em análise';save();renderDetail()}
+function renderDetail(){let c=current,analyst=user.role==='analista',editable=analyst||c.status==='Em preenchimento';
+$('detail').innerHTML=`<div class="card"><div class="skuhead"><div><h2>CRP ${esc(c.numero||'—')} · ${fmt(c.date)} · Turno ${c.shift}</h2><p class="muted">Conferente original: ${esc(c.originalClerk||c.clerk)} · Status: <span class="badge">${c.status}</span>${c.closedAt?` · Encerrado por ${esc(c.closedBy||c.createdBy||c.clerk)} em ${new Date(c.closedAt).toLocaleString('pt-BR')}`:''}</p></div><button class="secondary" onclick="showHome()">Voltar</button></div>
+<div class="notice">Cada SKU possui OP, apuração DPA, total da Produção e assinaturas próprias. O total da Produção nunca é copiado automaticamente do total DPA. Correções do analista são registradas separadamente; o conferente e o fechamento originais são preservados.</div>
+<div class="actions">${editable&&c.skus.length<12?'<button onclick="addSKU()">+ Adicionar SKU</button>':''}${!analyst&&c.status==='Em preenchimento'?'<button class="success" onclick="closeCRP()">Encerrar turno e enviar ao analista</button>':''}${analyst&&c.status!=='Analisado'?'<button class="success" onclick="finishReview()">Concluir análise</button>':''}${analyst&&c.status==='Analisado'?'<button onclick="reopenReview()">Reabrir análise</button>':''}</div>
+<p class="muted">${c.skus.length} de 12 SKUs no turno · Máximo de 4 em andamento simultaneamente.</p></div><div id="skuList"></div>${analyst?`<div class="card"><h3>Histórico de alterações</h3>${historyHTML(c)}</div>`:''}`;
+$('skuList').innerHTML=c.skus.map((s,i)=>skuHTML(s,i,editable,analyst)).join('')||'<div class="card muted">Nenhum SKU cadastrado. Use “Adicionar SKU”.</div>';
+if(!analyst) c.skus.forEach(s=>{if(!s.signProduction)initSignature(`sigp_${s.id}`,s,'signProduction');if(!s.signDpa)initSignature(`sigd_${s.id}`,s,'signDpa')});
+if(analyst)c.status=c.status==='Aguardando análise'?'Em análise':c.status;
+}
+function addSKU(){let active=current.skus.filter(s=>!s.closed).length;if(active>=4){alert('Já existem 4 SKUs em andamento. Encerre um SKU para liberar uma linha.');return}if(current.skus.length>=12){alert('Limite inicial de 12 SKUs por turno atingido.');return}
+current.skus.push({id:Date.now().toString(),code:'',desc:'',op:'',lot:'',expiry:'',line:'',addresses:[],productionTotal:'',closed:false,signProduction:'',signDpa:'',signatureChanged:false});save();renderDetail()}
+function skuHTML(s,i,editable,analyst){let d=editable?'':'disabled';let addresses=s.addresses.map((a,j)=>`<tr><td>${esc(a.arz)}</td><td>${esc(a.street)}</td><td>${esc(a.level)}</td><td>${esc(a.palletStart)}–${esc(a.palletEnd)}</td><td>${Number(a.qty)||0}</td><td>${editable?`<button class="danger" onclick="removeAddress('${s.id}',${j})">Excluir</button>`:''}</td></tr>`).join('');
+return `<div class="card sku"><div class="skuhead"><h3>SKU ${String(i+1).padStart(2,'0')} · ${esc(s.desc||'Novo SKU')}</h3><span class="badge ${s.closed?'green':'orange'}">${s.closed?'Encerrado':'Em andamento'}</span></div>
+<div class="grid">
+${field(s,'code','Código do produto (SKU)',d)}${field(s,'desc','Descrição',d)}${field(s,'op','Ordem de Produção (OP) — obrigatória',d)}${field(s,'lot','Lote',d)}${field(s,'expiry','Validade',d,'date')}${field(s,'line','Linha de produção',d)}
+</div>
+<h3 style="margin-top:16px">Endereçamentos</h3><div class="grid">
+${addrField(s,'arz','Armazém (ARZ)')}${addrField(s,'street','Rua')}${addrField(s,'level','Nível')}${addrField(s,'palletStart','Pallet inicial')}${addrField(s,'palletEnd','Pallet final')}${addrField(s,'qty','Quantidade (sacos)','number')}
+</div>${editable?`<div class="actions"><button onclick="addAddress('${s.id}')">Adicionar endereço</button></div>`:''}
+<table><thead><tr><th>ARZ</th><th>Rua</th><th>Nível</th><th>Pallets</th><th>Sacos</th><th></th></tr></thead><tbody>${addresses||'<tr><td colspan="6" class="muted">Nenhum endereço lançado.</td></tr>'}</tbody></table>
+<div class="stats" style="margin-top:12px"><div class="stat"><b>${s.addresses.reduce((n,a)=>n+(Number(a.qty)||0),0)}</b><span>Total DPA (sacos)</span></div><div class="stat"><b>${esc(s.productionTotal||'—')}</b><span>Total Produção (sacos)</span></div><div class="stat"><b>${s.productionTotal===''?'—':Number(s.productionTotal)-s.addresses.reduce((n,a)=>n+(Number(a.qty)||0),0)}</b><span>Diferença Produção − DPA</span></div></div>
+${editable?`<div class="grid" style="margin-top:12px"><div><label>Total informado pela Produção (sacos)</label><input type="number" min="0" value="${esc(s.productionTotal)}" onchange="setProduction('${s.id}',this.value)"></div></div>`:''}
+<div class="signrow" style="margin-top:14px"><div><label>Assinatura Produção</label>${analyst?(s.signProduction?`<img alt="Assinatura Produção" src="${s.signProduction}" style="max-width:100%;height:90px;border:1px solid #d8e1ea;border-radius:6px">`:'<span class="badge orange">Sem assinatura</span>'):(s.signProduction?`<img alt="Assinatura Produção" src="${s.signProduction}" style="max-width:100%;height:90px;border:1px solid #d8e1ea;border-radius:6px">`:`<canvas class="signature" id="sigp_${s.id}"></canvas><button class="secondary" onclick="clearSignature('${s.id}','signProduction')">Limpar</button>`)}</div><div><label>Assinatura DPA</label>${analyst?(s.signDpa?`<img alt="Assinatura DPA" src="${s.signDpa}" style="max-width:100%;height:90px;border:1px solid #d8e1ea;border-radius:6px">`:'<span class="badge orange">Sem assinatura</span>'):(s.signDpa?`<img alt="Assinatura DPA" src="${s.signDpa}" style="max-width:100%;height:90px;border:1px solid #d8e1ea;border-radius:6px">`:`<canvas class="signature" id="sigd_${s.id}"></canvas><button class="secondary" onclick="clearSignature('${s.id}','signDpa')">Limpar</button>`)}</div></div>
+<div class="actions">${editable&&!analyst&&!s.closed?`<button class="secondary" onclick="closeSKU('${s.id}')">Encerrar SKU</button>${s.addresses.length===0?`<button class="danger" onclick="removeUnusedSKU('${s.id}')">Excluir SKU não utilizado</button>`:''}`:''}${analyst?`<button class="secondary" onclick="editSKU('${s.id}')">Editar dados do SKU</button>`:''}</div>
+</div>`}
+function initSignature(canvasId,sku,key){let canvas=$(canvasId);if(!canvas)return;let ctx=canvas.getContext('2d'),drawing=false;function point(e){let r=canvas.getBoundingClientRect();let t=e.touches?e.touches[0]:e;return {x:(t.clientX-r.left)*canvas.width/r.width,y:(t.clientY-r.top)*canvas.height/r.height}}function start(e){drawing=true;let p=point(e);ctx.beginPath();ctx.moveTo(p.x,p.y);e.preventDefault()}function move(e){if(!drawing)return;let p=point(e);ctx.lineWidth=2;ctx.lineCap='round';ctx.strokeStyle='#12345a';ctx.lineTo(p.x,p.y);ctx.stroke();sku[key]=canvas.toDataURL('image/png');save();e.preventDefault()}function end(){if(drawing){drawing=false;sku[key]=canvas.toDataURL('image/png');save()}}canvas.addEventListener('mousedown',start);canvas.addEventListener('mousemove',move);window.addEventListener('mouseup',end);canvas.addEventListener('touchstart',start,{passive:false});canvas.addEventListener('touchmove',move,{passive:false});canvas.addEventListener('touchend',end)}
+function clearSignature(id,key){let sku=current.skus.find(x=>x.id===id);sku[key]='';save();renderDetail()}
+function field(s,k,label,disabled,type='text'){return `<div><label>${label}</label><input type="${type}" value="${esc(s[k]||'')}" ${disabled} onchange="setSKU('${s.id}','${k}',this.value)"></div>`}
+function addrField(s,k,label,type='text'){return `<div><label>${label}</label><input id="a_${s.id}_${k}" type="${type}" placeholder="${label}"></div>`}
+function setSKU(id,k,v){let s=current.skus.find(x=>x.id===id);if(user.role==='analista'&&!auditEdit(`SKU ${s.code||s.desc}: ${k}`,s[k],v))return;s[k]=v;save()}
+function setProduction(id,v){let s=current.skus.find(x=>x.id===id);if(user.role==='analista'&&!auditEdit(`SKU ${s.code}: total Produção`,s.productionTotal,v))return;s.productionTotal=v;save();renderDetail()}
+function addAddress(id){let s=current.skus.find(x=>x.id===id),keys=['arz','street','level','palletStart','palletEnd','qty'],vals=keys.map(k=>$(`a_${id}_${k}`).value);if(vals.some(v=>!v)){alert('Preencha todos os campos do endereço.');return}let a=Object.fromEntries(keys.map((k,i)=>[k,vals[i]]));if(user.role==='analista'){let reason=prompt('Motivo obrigatório para adicionar este endereço:');if(!reason||!reason.trim())return;current.audit.push({at:new Date().toISOString(),by:user.name,field:`Novo endereço do SKU ${s.code}`,oldValue:'—',newValue:JSON.stringify(a),reason:reason.trim(),tipo:'Ajuste de endereço'})}s.addresses.push(a);save();renderDetail()}
+function removeAddress(id,j){let s=current.skus.find(x=>x.id===id);if(user.role==='analista'){let reason=prompt('Informe o motivo da exclusão do endereço:');if(!reason)return;auditEdit(`Exclusão de endereço SKU ${s.code}`,JSON.stringify(s.addresses[j]),'Excluído',reason)}s.addresses.splice(j,1);save();renderDetail()}
+function removeUnusedSKU(id){let s=current.skus.find(x=>x.id===id);if(!s||s.closed||s.addresses.length>0){alert('Só é possível excluir um SKU ainda não utilizado, sem endereçamentos e não encerrado.');return}if(!confirm('Excluir este SKU que não foi utilizado?'))return;current.skus=current.skus.filter(x=>x.id!==id);save();renderDetail()}
+function closeSKU(id){let s=current.skus.find(x=>x.id===id);if(!s.code.trim()||!s.desc.trim()||!s.op.trim()||!s.lot.trim()||!s.expiry||!s.line.trim()){alert('Preencha SKU, descrição, OP, lote, validade e linha antes de encerrar.');return}if(!s.addresses.length){alert('Inclua ao menos um endereço antes de encerrar.');return}s.closed=true;s.closedAt=new Date().toISOString();save();renderDetail()}
+function closeCRP(){if(!current.skus.length||current.skus.some(s=>!s.closed)){alert('Cadastre e encerre todos os SKUs antes de encerrar o turno.');return}if(current.skus.some(s=>!s.code.trim()||!s.desc.trim()||!s.op.trim()||!s.lot.trim()||!s.expiry||!s.line.trim())){alert('Preencha SKU, descrição, OP, lote, validade e linha em todos os produtos.');return}if(current.skus.some(s=>!s.signProduction||!s.signDpa)){alert('Cada SKU precisa das assinaturas de Produção e DPA antes do fechamento.');return}if(!confirm('Encerrar o CRP e disponibilizar ao analista?'))return;current.status='Aguardando análise';current.closedAt=new Date().toISOString();current.closedBy=user.name;current.originalClerk=current.originalClerk||current.clerk;save();showHome()}
+function auditEdit(field,oldVal,newVal,reason=''){if(String(oldVal??'')===String(newVal??''))return true;let r=reason||prompt('Motivo obrigatório da correção:');if(!r||!r.trim()){alert('Correção cancelada. O motivo é obrigatório.');return false}current.audit.push({at:new Date().toISOString(),by:user.name,field,oldValue:oldVal??'',newValue:newVal??'',reason:r.trim(),tipo:'Correção'});return true}
+function editSKU(id){let s=current.skus.find(x=>x.id===id);let reason=prompt('Informe o motivo da correção do SKU:');if(!reason)return;let fields=[['code','Código SKU'],['desc','Descrição'],['op','Ordem de Produção'],['lot','Lote'],['expiry','Validade'],['line','Linha']];for(let [k,label] of fields){let v=prompt(label,s[k]||'');if(v!==null&&v!==s[k]){current.audit.push({at:new Date().toISOString(),by:user.name,field:`SKU ${s.code||s.desc}: ${label}`,oldValue:s[k],newValue:v,reason,tipo:'Correção'});s[k]=v}}
+save();renderDetail()}
+function finishReview(){if(current.skus.some(s=>!s.op.trim())){alert('Há SKU sem Ordem de Produção. Corrija antes de concluir.');return}if(!confirm('Concluir análise deste CRP?'))return;current.status='Analisado';current.reviewedAt=new Date().toISOString();current.reviewedBy=user.name;save();showHome()}
+function reopenReview(){let reason=prompt('Informe o motivo para reabrir a análise:');if(!reason)return;current.audit.push({at:new Date().toISOString(),by:user.name,field:'Reabertura da análise',oldValue:'Analisado',newValue:'Reaberto',reason});current.status='Reaberto';save();renderDetail()}
+function historyHTML(c){return c.audit.length?`<table><thead><tr><th>Data/hora</th><th>Usuário</th><th>Campo</th><th>Anterior</th><th>Novo</th><th>Motivo</th></tr></thead><tbody>${c.audit.map(a=>`<tr><td>${new Date(a.at).toLocaleString('pt-BR')}</td><td>${esc(a.by)}</td><td>${esc(a.field)}</td><td>${esc(a.oldValue)}</td><td>${esc(a.newValue)}</td><td>${esc(a.reason)}</td></tr>`).join('')}</tbody></table>`:'<p class="muted">Nenhuma alteração registrada.</p>'}
+$('crpDate').value=new Date().toISOString().slice(0,10);
+</script></body></html>
